@@ -27,8 +27,13 @@ public class SecurityConfig {
             .cors(cors -> {}) // ✅ Active le support CORS ici
             .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
             .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/api/auth/**").permitAll()
-                .anyRequest().authenticated()
+            		.requestMatchers(
+            		        "/api/auth/**",       // Auth
+            		        "/api/betail/**",     // Autorise bétail sans authentification
+            		        "/api/parcelles/**",  // (si tu veux aussi autoriser les parcelles)
+            		        "/api/cultures/**",    
+            		        "api/recoltes/**"
+            		    ).permitAll()                .anyRequest().authenticated()
             )
             .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
 
