@@ -47,10 +47,9 @@ public class SecurityConfig {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/**")
-                .allowedOrigins("http://localhost:8081") // ✅ Met ici l’URL exacte du frontend
-                        .allowedMethods("*")
-                        .allowedHeaders("*")
-                        .allowCredentials(true);
+                    .allowedOrigins("https://plant-era-frontend.onrender.com")
+                    .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
+                    .allowedHeaders("*");
             }
         };
     }
