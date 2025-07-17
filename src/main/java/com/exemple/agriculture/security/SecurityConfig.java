@@ -32,6 +32,7 @@ public class SecurityConfig {
                     "/api/auth/**",
                     "/api/betail/**",
                     "/api/parcelles/**",
+                    "/api/auth/me",
                     "/api/cultures/**",
                     "/api/recoltes/**"
                 ).permitAll()
@@ -49,7 +50,7 @@ public class SecurityConfig {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/**")
-                    .allowedOrigins("https://plant-era-frontend.onrender.com")
+                .allowedOrigins("http://localhost:8081", "https://plant-era-frontend.onrender.com")
                     .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
                     .allowedHeaders("*");
             }
