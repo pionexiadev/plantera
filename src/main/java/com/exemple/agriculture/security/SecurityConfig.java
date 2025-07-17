@@ -23,26 +23,26 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
-            .csrf(csrf -> csrf.disable())
-            .cors(cors -> {}) // ✅ Active le support CORS ici
+            .csrf(csrf -> csrf.disable()) // 🔐 Désactive CSRF (ok pour les APIs REST)
+            .cors(cors -> {}) // ✅ Active CORS ici
             .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
             .authorizeHttpRequests(auth -> auth
-            		.requestMatchers(
-            			    "/api/auth/**",
-            			    "/api/betail/**",
-            			    "/api/parcelles/**",
-            			    "/api/cultures/**",
-            			    "/api/recoltes/**" // ← corriger ici
-            			).permitAll()
-              .anyRequest().authenticated()
+                .requestMatchers(
+                    "/api/auth/**",
+                    "/api/betail/**",
+                    "/api/parcelles/**",
+                    "/api/cultures/**",
+                    "/api/recoltes/**"
+                ).permitAll()
+                .anyRequest().authenticated()
             )
             .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
     }
 
+    // ✅ CORS autorisé uniquement depuis ton front déployé
     @Bean
-    
     public WebMvcConfigurer corsConfigurer() {
         return new WebMvcConfigurer() {
             @Override
@@ -55,8 +55,6 @@ public class SecurityConfig {
         };
     }
 
-
-
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
         return config.getAuthenticationManager();
@@ -66,7 +64,4 @@ public class SecurityConfig {
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
-    
-    
-
 }
